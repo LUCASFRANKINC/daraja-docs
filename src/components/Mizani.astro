@@ -1,0 +1,78 @@
+---
+/**
+ * Where a tutorial stops at work the free package leaves to you, this says
+ * there is a dashboard for it. The wording lives here, once, so every page
+ * picks up an edit.
+ *
+ * Kept separate from HireMe on purpose: consulting and the product are
+ * different offers to different readers. And kept honest: it names one
+ * problem the reader has just met, says Mizani is paid, and says this
+ * package stays free.
+ */
+interface Props {
+    /** Which problem the page has just described. */
+    topic: 'callbacks' | 'reconciliation' | 'statements' | 'tenants';
+}
+
+const { topic } = Astro.props;
+
+const MIZANI = 'https://mizani.eazysoft.africa';
+
+const copy = {
+    callbacks: {
+        lead: 'Want to see the callbacks that never arrived?',
+        note: 'Mizani lists every prompt Safaricom accepted and never answered, checks each one with Safaricom, and lets you replay a callback your handler threw on, from one screen.',
+        href: `${MIZANI}/#tour`,
+    },
+    reconciliation: {
+        lead: 'Rather not build this yourself?',
+        note: 'Mizani runs this reconciliation on a schedule, shows Safaricom’s record beside yours, and gives you a button to import what you missed, with an audit trail of who did.',
+        href: `${MIZANI}/#features`,
+    },
+    statements: {
+        lead: 'Older than 48 hours?',
+        note: 'Pull Transactions stops there. Mizani reads the statement PDF from the M-Pesa org portal, checks every balance adds up, and compares it with your records.',
+        href: `${MIZANI}/#features`,
+    },
+    tenants: {
+        lead: 'Running M-Pesa for many businesses?',
+        note: 'Mizani Pro gives each business its own view of its payments and health, on its own paybill or till, while your support team can find a payment without seeing anybody’s money.',
+        href: `${MIZANI}/#pro`,
+    },
+}[topic];
+---
+
+<aside class="mizani" aria-label="Mizani">
+    <p class="mizani__lead">{copy.lead}</p>
+    <p class="mizani__note">{copy.note}</p>
+    <p class="mizani__note">
+        <a href={copy.href}>Mizani</a> is the paid M-Pesa dashboard built on this package by the
+        same maintainer. Laravel Daraja stays free and open source either way.
+    </p>
+</aside>
+
+<style>
+    .mizani {
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 0.5rem;
+        padding: 1rem 1.25rem;
+        margin: 2rem 0;
+        background: var(--sl-color-gray-6);
+    }
+
+    .mizani__lead {
+        font-weight: 600;
+        color: var(--sl-color-white);
+        margin: 0 0 0.5rem;
+    }
+
+    .mizani__note {
+        font-size: var(--sl-text-sm);
+        color: var(--sl-color-gray-2);
+        margin: 0 0 0.5rem;
+    }
+
+    .mizani__note:last-child {
+        margin-bottom: 0;
+    }
+</style>

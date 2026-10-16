@@ -13,6 +13,11 @@ import Default from '@astrojs/starlight/components/Footer.astro';
 
 <Default><slot /></Default>
 
+<p class="credit">
+    Laravel Daraja is free and open source, maintained by
+    <a href="https://eazysoft.africa">eazysoft</a>.
+</p>
+
 <p class="disclaimer">
     An independent open-source project, not affiliated with, endorsed by, or sponsored
     by Safaricom PLC or Laravel LLC. <i>M-Pesa</i> and <i>Daraja</i> are trademarks of
@@ -21,6 +26,16 @@ import Default from '@astrojs/starlight/components/Footer.astro';
 </p>
 
 <style>
+    .credit {
+        margin-top: 1.5rem;
+        font-size: var(--sl-text-sm);
+        color: var(--sl-color-gray-2);
+    }
+
+    .credit a {
+        font-weight: 600;
+    }
+
     .disclaimer {
         margin-top: 1.5rem;
         padding-top: 1rem;

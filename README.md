@@ -138,32 +138,27 @@ Pushing to `main` builds and deploys via `.github/workflows/deploy.yml`.
 GitHub Pages must be set to **GitHub Actions** as its source under
 Settings → Pages.
 
-## Planned: the Mizani funnel
+## The Mizani funnel
 
-The tutorials are the top of a funnel that currently has no bottom. Every one
-of them ends at a problem the free package leaves you to solve by hand — the
-unmatched payments pile in `tutorials/c2b-paybill`, the failed payouts needing
-a human decision in `tutorials/b2c-payouts`, the sweep for stuck attempts, the
-per-tenant reconciliation in `tutorials/multi-tenant`. Those are the places a
-reader is most receptive to being told there is a dashboard for this.
+The tutorials are the top of a funnel that ends at Mizani, the paid dashboard
+built on this package. `src/components/Mizani.astro` holds the wording once; a
+page names the problem it has just described with `topic`:
 
-Nothing has been added yet, deliberately: **Mizani is not finished**, and
-sending traffic to a product that is not ready spends the goodwill once. When
-the panel is ready:
+| `topic` | Used on | Says |
+| --- | --- | --- |
+| `callbacks` | stk-push, callbacks-localhost, livewire-checkout, api-checkout | missing callbacks, checked and replayed from one screen |
+| `statements` | c2b-paybill | statement PDFs for anything older than 48 hours |
+| `reconciliation` | qr-payments, subscriptions | reconciliation on a schedule, with an import button |
+| `tenants` | multi-tenant | Mizani Pro for platforms |
 
-- A shared component, in the shape of `src/components/HireMe.astro`, so the
-  wording lives in one file and every tutorial picks up an edit.
-- Placed at the point in each page where the manual work is described, not
-  bolted to the bottom. The `## Next` section of each tutorial is the natural
-  home.
-- Honest about what it is. These pages earn their traffic by being accurate
-  about M-Pesa; an advertisement that oversells undoes that in one visit.
-- `HireMe` stays where it is. Consulting and the product are different offers
-  to different readers, and a page carrying both asks the reader to choose
-  between them.
+Rules that keep it honest:
 
-Until then the tutorials link only to the free guides, which is the correct
-behaviour rather than an oversight — do not add a placeholder.
+- One offer per page. Pages with `HireMe` (going-live, reconciliation, b2c and
+  b2c-payouts) do not also carry `Mizani`: consulting and the product are
+  different offers, and a page carrying both asks the reader to choose.
+- It sits at the end of the page's `## Next` section, after the free guide it
+  points to, never in the middle of the instructions.
+- It says Mizani is paid and that this package stays free.
 
 ## Source of truth
 
