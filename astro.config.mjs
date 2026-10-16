@@ -135,7 +135,7 @@ export default defineConfig({
             editLink: {
                 baseUrl: 'https://github.com/starnerz/daraja-docs/edit/main/',
             },
-            customCss: ['./src/styles/custom.css'],
+            customCss: ['@fontsource-variable/geist', '@fontsource-variable/geist-mono', './src/styles/custom.css'],
             lastUpdated: true,
             sidebar: [
                 {

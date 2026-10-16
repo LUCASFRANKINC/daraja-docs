@@ -25,12 +25,12 @@ export const { getStaticPaths, GET } = await OGImageRoute({
         title: page.title,
         description: page.description,
         logo: { path: './src/assets/logo-og.png', size: [76] },
-        // Same palette as the site: deep green ground, Safaricom-adjacent accent.
+        // Same palette as the site: Eazysoft Deep Navy ground, Wink Teal edge.
         bgGradient: [
-            [13, 42, 21],
-            [23, 32, 27],
+            [11, 27, 51],
+            [7, 19, 38],
         ],
-        border: { color: [23, 132, 59], width: 20, side: 'inline-start' },
+        border: { color: [15, 163, 177], width: 20, side: 'inline-start' },
         padding: 70,
         fonts: ['./src/fonts/inter-700.ttf', './src/fonts/inter-400.ttf'],
         font: {
@@ -46,7 +46,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
                 weight: 'Normal',
                 size: 30,
                 lineHeight: 1.4,
-                color: [166, 233, 189],
+                color: [60, 198, 210],
             },
         },
     }),

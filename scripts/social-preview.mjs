@@ -14,10 +14,10 @@ const OUT = new URL('../social/', import.meta.url);
 const base = {
     logo: { path: './src/assets/logo-og.png', size: [88] },
     bgGradient: [
-        [13, 42, 21],
-        [23, 32, 27],
+        [11, 27, 51],
+        [7, 19, 38],
     ],
-    border: { color: [23, 132, 59], width: 22, side: 'inline-start' },
+    border: { color: [15, 163, 177], width: 22, side: 'inline-start' },
     padding: 72,
     fonts: ['./src/fonts/inter-700.ttf', './src/fonts/inter-400.ttf'],
     font: {
@@ -33,7 +33,7 @@ const base = {
             weight: 'Normal',
             size: 30,
             lineHeight: 1.4,
-            color: [166, 233, 189],
+            color: [60, 198, 210],
         },
     },
 };

@@ -1,35 +1,40 @@
 /*
- * Palette anchored on Safaricom's green so the docs read as M-Pesa tooling
- * without imitating Safaricom's own branding.
+ * Eazysoft's palette: Deep Navy greys and Wink Teal, in place of the
+ * Safaricom-adjacent green this site started with. A package maintained by
+ * Eazysoft should look like Eazysoft, and not like an official Safaricom page.
+ * Fonts are Geist and Geist Mono, bundled with the site.
  */
 :root {
-    --sl-color-accent-low: #0d2a15;
-    --sl-color-accent: #17843b;
-    --sl-color-accent-high: #a6e9bd;
+    --sl-font: 'Geist Variable', 'Segoe UI', system-ui, sans-serif;
+    --sl-font-mono: 'Geist Mono Variable', 'Cascadia Mono', Consolas, monospace;
+
+    --sl-color-accent-low: #0f3341;
+    --sl-color-accent: #0fa3b1;
+    --sl-color-accent-high: #8fe3ea;
 
     --sl-color-white: #ffffff;
-    --sl-color-gray-1: #e9f1ec;
-    --sl-color-gray-2: #c2cfc7;
-    --sl-color-gray-3: #8a9c91;
-    --sl-color-gray-4: #55665c;
-    --sl-color-gray-5: #36453d;
-    --sl-color-gray-6: #24312a;
-    --sl-color-black: #17201b;
+    --sl-color-gray-1: #eaf0f7;
+    --sl-color-gray-2: #c1cbd9;
+    --sl-color-gray-3: #8c9bb0;
+    --sl-color-gray-4: #56677f;
+    --sl-color-gray-5: #34507a;
+    --sl-color-gray-6: #10243f;
+    --sl-color-black: #071326;
 }
 
 :root[data-theme='light'] {
-    --sl-color-accent-low: #c3ecd2;
-    --sl-color-accent: #12702f;
-    --sl-color-accent-high: #0a3a19;
+    --sl-color-accent-low: #d3f1f4;
+    --sl-color-accent: #0b7c87;
+    --sl-color-accent-high: #0b1b33;
 
-    --sl-color-white: #17201b;
-    --sl-color-gray-1: #24312a;
-    --sl-color-gray-2: #36453d;
-    --sl-color-gray-3: #55665c;
-    --sl-color-gray-4: #8a9c91;
-    --sl-color-gray-5: #c2cfc7;
-    --sl-color-gray-6: #e9f1ec;
-    --sl-color-gray-7: #f4f8f5;
+    --sl-color-white: #0b1b33;
+    --sl-color-gray-1: #1a2f52;
+    --sl-color-gray-2: #43526b;
+    --sl-color-gray-3: #5b6b82;
+    --sl-color-gray-4: #8e9bae;
+    --sl-color-gray-5: #c3ccd9;
+    --sl-color-gray-6: #eaeff5;
+    --sl-color-gray-7: #f3f6fa;
     --sl-color-black: #ffffff;
 }
 
