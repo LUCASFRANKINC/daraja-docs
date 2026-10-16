@@ -138,3 +138,24 @@
 .tutorial-path {
     margin-block: 2rem;
 }
+
+/*
+ * Starlight caps pages without a sidebar (the home page) at 67.5rem and docs
+ * pages at 45rem, which leaves wide screens with broad empty margins. Open
+ * both up on large screens; docs stay narrow enough to read comfortably.
+ */
+@media (min-width: 80rem) {
+    :root:not([data-has-sidebar]) {
+        --sl-content-width: 76rem;
+    }
+}
+
+@media (min-width: 100rem) {
+    :root:not([data-has-sidebar]) {
+        --sl-content-width: 84rem;
+    }
+
+    :root[data-has-sidebar] {
+        --sl-content-width: 52rem;
+    }
+}
