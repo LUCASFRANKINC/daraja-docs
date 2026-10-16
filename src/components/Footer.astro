@@ -8,8 +8,6 @@
  * every page, is what keeps that an accurate description of an open-source
  * project rather than an implied endorsement — and it is cheaper to publish
  * now than to be asked for later.
- *
- * The maintainer line is text only until eazysoft.africa is live.
  */
 import Default from '@astrojs/starlight/components/Footer.astro';
 import DarajaMark from './marks/DarajaMark.astro';
@@ -22,7 +20,7 @@ import EazysoftMark from './marks/EazysoftMark.astro';
     <DarajaMark size={18} class="credit__mark" />
     <span>
         Laravel Daraja is free and open source, maintained by{' '}
-        <b class="credit__by"><EazysoftMark size={13} />eazysoft</b>.
+        <a class="credit__by" href="https://eazysoft.africa"><EazysoftMark size={13} />eazysoft</a>.
     </span>
 </p>
 

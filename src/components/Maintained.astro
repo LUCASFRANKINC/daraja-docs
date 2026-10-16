@@ -1,9 +1,5 @@
 ---
-/**
- * Who is behind the package, and the way to have something built. Text and
- * email only until eazysoft.africa is live; the link to the site goes in
- * with the launch-day merge.
- */
+/** Who is behind the package, the way to have something built, and the dashboard built on it. */
 import EazysoftMark from './marks/EazysoftMark.astro';
 
 const CONTACT = 'hello@eazysoft.africa';
@@ -20,8 +16,10 @@ const href = `mailto:${CONTACT}?subject=${encodeURIComponent('Enquiry from larav
         <p>
             Laravel Daraja is free and open source, and it stays that way. Eazysoft is the
             software company behind it. If you would rather have your M-Pesa integration, or
-            anything else, built for you, talk to us.
+            anything else, built for you, talk to us. Running M-Pesa in production already?
+            <a href="https://mizani.eazysoft.africa">Mizani</a> is our dashboard for it.
         </p>
+        <p class="more"><a href="https://eazysoft.africa">Visit eazysoft.africa</a></p>
     </div>
     <a class="cta" href={href}>Email {CONTACT}</a>
 </section>
@@ -65,6 +63,17 @@ const href = `mailto:${CONTACT}?subject=${encodeURIComponent('Enquiry from larav
     p {
         margin: 0;
         max-width: 40rem;
+    }
+
+    p a {
+        color: #8fe3ea;
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+    }
+
+    .more {
+        margin-top: 0.75rem;
+        font-weight: 600;
     }
 
     .cta {

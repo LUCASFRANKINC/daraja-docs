@@ -16,6 +16,8 @@ faq:
         worker and still fails when the callback never comes.
 ---
 
+import Mizani from '../../../components/Mizani.astro';
+
 An M-Pesa payment does not resolve while the customer is looking at your page.
 The prompt goes to their handset, they take as long as they take, and the
 answer arrives at your server on a completely separate request.
@@ -288,3 +290,5 @@ change made by something it never spoke to, which is the entire design.
 
 The component is the easy half. What happens when a callback never arrives at
 all is [Reconciling payments](../../guides/reconciliation/).
+
+<Mizani topic="callbacks" />
