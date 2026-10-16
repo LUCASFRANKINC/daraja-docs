@@ -7,6 +7,83 @@ description: Every release of starnerz/laravel-daraja, and what changed in it.
 
 Every release of [`starnerz/laravel-daraja`](https://packagist.org/packages/starnerz/laravel-daraja).
 
+## [5.4.0] — 2026-10-16
+
+### Added
+
+- **Exceptions link to the page that explains them.** Every package exception
+  has `docsUrl()` and a `context()` that Laravel adds to the log entry when it
+  reports the exception. An `ApiRequestException` also logs Safaricom's
+  `error_code`, `request_id` and the HTTP status, and links to the error-codes
+  reference. Its message is unchanged, since applications store and show it.
+- **Setup errors name the page to read.** A missing configuration value and a
+  failed access-token request now end with a link to the configuration docs.
+- **`daraja:token` says what to do next** once the credentials work: the STK
+  Push tutorial.
+- **The published config file links to the docs** for each section that has a
+  guide.
+
+## [5.3.1] — 2026-10-15
+
+### Fixed
+
+- **The `Daraja` binding is scoped to the request.** It was a singleton that kept
+  the container from boot, so under Octane it read configuration from the
+  boot container rather than the current request's.
+
+## [5.3.0] — 2026-10-15
+
+### Added
+
+- **`Daraja::using($settings, connection: …)`** returns a Daraja that makes
+  every call with the given settings in place of the configured ones. Keys are
+  those of `config/laravel-daraja.php`, nested or in dot notation; anything not
+  given falls back to configuration.
+  It replaces setting configuration around a call and restoring it in a
+  `finally` block. Nothing is set globally, so there is nothing to restore, and
+  a queued job or a long-lived worker can never inherit another merchant's
+  credentials. Access tokens stay per merchant, as before, because the cache
+  key already fingerprints the consumer key.
+  APIs on a scoped instance are built directly rather than resolved from the
+  container, so a binding that decorates an API does not apply to them.
+- **`connection` on `DarajaRequestSending` and `DarajaResponseReceived`**: the
+  name passed to `using()`, or null. It lets a listener tell which merchant a
+  call was made for when the payload does not say. Added as a trailing optional
+  constructor argument, so code constructing these events itself is unaffected.
+
+## [5.2.0] — 2026-09-01
+
+### Added
+
+- **Guzzle 8 support.** The requirement is now `^7.8 || ^8.0`. Nothing in the
+  package changes: this widens what it permits, so an application that has
+  already moved to Guzzle 8 can install it at all. Applications on Guzzle 7 are
+  unaffected and need do nothing.
+  Both are covered by CI rather than assumed — Laravel 12 resolves Guzzle 7 and
+  Laravel 13 resolves Guzzle 8, on PHP 8.3 and 8.4 alike.
+
+### Changed
+
+- **Vulnerability reports now go to `security@eazysoft.africa`** rather than a
+  personal address. `SECURITY.md` is the authority; the README and
+  `CONTRIBUTING.md` agree with it.
+- Documentation moved to **https://laraveldaraja.com/**. The old
+  `starnerz.github.io/daraja-docs/` URLs redirect, so existing links keep
+  working.
+
+## [5.1.0] — 2026-09-01
+
+### Added
+
+- **`DarajaRequestSending` and `DarajaResponseReceived` events**, dispatched
+  around every outbound call made through `DarajaClient`. Between these and the
+  five callback events, both directions of a Daraja integration are now
+  observable without decorating anything.
+  The request payload and the response body carry the same redaction the
+  logger applies, so a listener may persist them safely. A call that never
+  received a response dispatches only the first event, which is how a listener
+  tells an unanswered request from a rejected one.
+
 ## [5.0.0] — 2026-08-18
 
 A full rewrite. See the
@@ -74,6 +151,11 @@ tracked successive Laravel majors over the 1.x codebase.
 Initial releases supporting M-Pesa Express, C2B, B2C, B2B, Account Balance,
 Transaction Status and Reversal on Laravel 5.5+.
 
+[5.4.0]: https://github.com/starnerz/laravel-daraja/compare/v5.3.1...v5.4.0
+[5.3.1]: https://github.com/starnerz/laravel-daraja/compare/v5.3.0...v5.3.1
+[5.3.0]: https://github.com/starnerz/laravel-daraja/compare/v5.2.0...v5.3.0
+[5.2.0]: https://github.com/starnerz/laravel-daraja/compare/v5.1.0...v5.2.0
+[5.1.0]: https://github.com/starnerz/laravel-daraja/compare/v5.0.0...v5.1.0
 [5.0.0]: https://github.com/starnerz/laravel-daraja/compare/v4.0.0...v5.0.0
 [4.0.0]: https://github.com/starnerz/laravel-daraja/compare/v1.0.4...v4.0.0
 [1.0.0]: https://github.com/starnerz/laravel-daraja/releases/tag/v1.0.0
