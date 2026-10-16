@@ -1,0 +1,105 @@
+---
+/** The supported APIs as links, grouped the way the API overview groups them. */
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const groups = [
+    {
+        name: 'Taking payments',
+        apis: [
+            ['M-Pesa Express (STK Push)', 'apis/mpesa-express'],
+            ['STK status query', 'apis/mpesa-express'],
+            ['C2B Paybill and till', 'apis/c2b'],
+            ['Dynamic QR', 'apis/dynamic-qr'],
+            ['M-Pesa Ratiba', 'apis/standing-orders'],
+            ['Lipa na Bonga', 'apis/lipa-na-bonga'],
+        ],
+    },
+    {
+        name: 'Paying out',
+        apis: [
+            ['Business to Customer', 'apis/b2c'],
+            ['Business to Pochi', 'apis/b2c'],
+            ['Business Pay Bill', 'apis/b2b'],
+            ['Business Buy Goods', 'apis/b2b'],
+            ['B2C account top-up', 'apis/b2b'],
+            ['B2B Express Checkout', 'apis/b2b'],
+        ],
+    },
+    {
+        name: 'Keeping the books',
+        apis: [
+            ['Account balance', 'apis/account-services'],
+            ['Transaction status', 'apis/account-services'],
+            ['Reversal', 'apis/account-services'],
+            ['Pull Transactions', 'apis/pull-transactions'],
+            ['Bill Manager', 'apis/bill-manager'],
+        ],
+    },
+];
+---
+
+<div class="groups">
+    {
+        groups.map(({ name, apis }) => (
+            <div>
+                <h3>{name}</h3>
+                <ul>
+                    {apis.map(([label, slug]) => (
+                        <li>
+                            <a href={`${base}/${slug}/`}>{label}</a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ))
+    }
+</div>
+
+<style>
+    .groups {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    h3 {
+        margin: 0 0 0.75rem;
+        font-size: var(--sl-text-sm);
+        font-weight: 600;
+        color: var(--sl-color-gray-2);
+    }
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.25rem;
+        padding: 0.25rem 0.85rem;
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 999px;
+        font-size: var(--sl-text-sm);
+        font-weight: 500;
+        text-decoration: none;
+        color: var(--sl-color-white);
+        background: var(--sl-color-black);
+        transition: border-color 0.2s ease;
+    }
+
+    a:hover {
+        border-color: var(--sl-color-accent);
+        color: var(--sl-color-text-accent);
+    }
+
+    @media (min-width: 64rem) {
+        .groups {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+</style>

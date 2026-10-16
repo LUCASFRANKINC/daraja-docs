@@ -12,7 +12,7 @@ import { generateOpenGraphImage } from 'astro-og-canvas';
 const OUT = new URL('../social/', import.meta.url);
 
 const base = {
-    logo: { path: './src/assets/logo-og.png', size: [88] },
+    logo: { path: './src/assets/logo-og.png', size: [520] },
     bgGradient: [
         [11, 27, 51],
         [7, 19, 38],

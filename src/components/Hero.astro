@@ -1,0 +1,331 @@
+---
+/**
+ * The home page hero. Copy on the left, and on the right the thing the
+ * package is: a controller sending an STK push, with the callback that
+ * follows shown as a floating note, the way the Mizani page shows its panel.
+ * Only the home page has a `hero`, so this replaces nothing else.
+ */
+import { Code, LinkButton } from '@astrojs/starlight/components';
+
+const { data } = Astro.locals.starlightRoute.entry;
+const { title = data.title, tagline, actions = [] } = data.hero || {};
+
+const INSTALL = 'composer require starnerz/laravel-daraja';
+
+const code = `use Starnerz\\LaravelDaraja\\Facades\\Daraja;
+
+public function pay(Order $order)
+{
+    $response = Daraja::stk()->push(
+        phone: $order->phone,
+        amount: $order->total,
+        accountReference: $order->reference,
+    );
+
+    $order->update([
+        'checkout_id' => $response->checkoutRequestId,
+    ]);
+
+    return back()->with('status', 'Check your phone.');
+}`;
+
+const checks = ['Free and open source (MIT)', 'PHP 8.3+, Laravel 12 and 13', 'Seventeen Daraja APIs'];
+---
+
+<div class="hero">
+    <div class="copy">
+        <p class="eyebrow">
+            <span class="dots" aria-hidden="true"><span></span><span></span></span>
+            The M-Pesa package for Laravel
+        </p>
+        <h1 id="_top" data-page-title set:html={title} />
+        {tagline && <p class="tagline" set:html={tagline} />}
+
+        <div class="actions">
+            {
+                actions.map(({ icon, link: href, text, variant }) => (
+                    <LinkButton {href} {variant} icon={icon?.name}>
+                        {text}
+                    </LinkButton>
+                ))
+            }
+        </div>
+
+        <div class="install">
+            <code><span class="prompt" aria-hidden="true">$</span> {INSTALL}</code>
+            <button type="button" data-copy={INSTALL} aria-label="Copy the install command">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+                <span class="copied" role="status"></span>
+            </button>
+        </div>
+
+        <ul class="checks">
+            {
+                checks.map((check) => (
+                    <li>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                        {check}
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+
+    <div class="window">
+        <Code code={code} lang="php" title="app/Http/Controllers/CheckoutController.php" />
+        <div class="callout" aria-hidden="true">
+            <span class="tick">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+            </span>
+            <span>
+                <b>StkCallbackReceived</b>
+                <small>Paid. The receipt is on the order.</small>
+            </span>
+        </div>
+    </div>
+</div>
+
+<script>
+    for (const button of document.querySelectorAll<HTMLButtonElement>('.install button[data-copy]')) {
+        const status = button.querySelector('.copied');
+        button.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(button.dataset.copy ?? '');
+                if (status) status.textContent = 'Copied';
+            } catch {
+                // No clipboard access: select the command so the reader can copy it themselves.
+                const code = button.parentElement?.querySelector('code');
+                if (code) getSelection()?.selectAllChildren(code);
+                if (status) status.textContent = 'Selected: press Ctrl+C';
+            }
+            setTimeout(() => status && (status.textContent = ''), 2000);
+        });
+    }
+</script>
+
+<style>
+    .hero {
+        display: grid;
+        gap: 2.5rem;
+        padding-block: 1rem 2rem;
+    }
+
+    .copy {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        min-width: 0;
+    }
+
+    .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 0;
+        font-size: var(--sl-text-sm);
+        font-weight: 600;
+        color: var(--sl-color-text-accent);
+    }
+
+    .dots {
+        display: inline-flex;
+        gap: 0.25rem;
+    }
+
+    .dots span {
+        height: 0.5rem;
+        width: 0.5rem;
+        border-radius: 999px;
+        background: #0fa3b1;
+    }
+
+    .dots span + span {
+        width: 1.5rem;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: clamp(2.5rem, 1.4rem + 4.4vw, 4.25rem);
+        line-height: 1.02;
+        font-weight: 700;
+        letter-spacing: -0.045em;
+        color: var(--sl-color-white);
+        text-wrap: balance;
+    }
+
+    h1 :global(.accent) {
+        color: var(--sl-color-text-accent);
+    }
+
+    .tagline {
+        margin: 0;
+        max-width: 34rem;
+        font-size: var(--sl-text-xl);
+        line-height: 1.55;
+        color: var(--sl-color-gray-2);
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem 1.5rem;
+    }
+
+    .install {
+        display: inline-flex;
+        align-items: center;
+        align-self: flex-start;
+        max-width: 100%;
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 10px;
+        background: var(--sl-color-gray-6);
+    }
+
+    .install code {
+        overflow-x: auto;
+        padding: 0.6rem 0.25rem 0.6rem 0.9rem;
+        font-family: var(--sl-font-mono);
+        font-size: var(--sl-text-sm);
+        white-space: nowrap;
+        color: var(--sl-color-white);
+        background: none;
+    }
+
+    .install .prompt {
+        color: var(--sl-color-text-accent);
+        user-select: none;
+    }
+
+    .install button {
+        position: relative;
+        display: inline-flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        border: 0;
+        border-radius: 8px;
+        background: none;
+        color: var(--sl-color-gray-2);
+        cursor: pointer;
+    }
+
+    .install button:hover {
+        color: var(--sl-color-white);
+    }
+
+    .copied:not(:empty) {
+        position: absolute;
+        bottom: calc(100% + 0.25rem);
+        right: 0;
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+        font-size: var(--sl-text-xs);
+        white-space: nowrap;
+        color: #fff;
+        background: #0b7c87;
+    }
+
+    .checks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: var(--sl-text-sm);
+        color: var(--sl-color-gray-2);
+    }
+
+    .checks li {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .checks svg {
+        color: var(--sl-color-text-accent);
+    }
+
+    .window {
+        position: relative;
+        min-width: 0;
+        padding-bottom: 2.5rem;
+    }
+
+    .window :global(.expressive-code) {
+        margin: 0;
+    }
+
+    .window :global(.expressive-code .frame) {
+        box-shadow: 0 32px 64px -24px rgb(11 27 51 / 0.55);
+    }
+
+    .callout {
+        position: absolute;
+        right: 1rem;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        max-width: calc(100% - 2rem);
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 14px;
+        background: var(--sl-color-black);
+        box-shadow: 0 20px 40px -16px rgb(11 27 51 / 0.45);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .callout .tick {
+        display: inline-flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 999px;
+        color: #0a5c40;
+        background: rgb(14 122 85 / 0.15);
+    }
+
+    :global([data-theme='dark']) .callout .tick {
+        color: #7fd9b3;
+    }
+
+    .callout b {
+        display: block;
+        font-family: var(--sl-font-mono);
+        font-size: var(--sl-text-sm);
+        color: var(--sl-color-white);
+    }
+
+    .callout small {
+        display: block;
+        font-size: var(--sl-text-xs);
+        color: var(--sl-color-gray-3);
+    }
+
+    @keyframes float {
+        50% {
+            transform: translateY(-6px);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .callout {
+            animation: none;
+        }
+    }
+
+    @media (min-width: 64rem) {
+        .hero {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+            align-items: center;
+            gap: 3.5rem;
+            padding-block: 3rem 4rem;
+        }
+    }
+</style>

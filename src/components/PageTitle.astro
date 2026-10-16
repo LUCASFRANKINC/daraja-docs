@@ -1,0 +1,31 @@
+---
+/**
+ * Starlight's page title, with "Tutorial 3 of 9" above it on tutorial pages,
+ * so a reader always knows where they are on the path.
+ */
+import Default from '@astrojs/starlight/components/PageTitle.astro';
+import { tutorials } from '../tutorials.mjs';
+
+const index = tutorials.findIndex(({ slug }) => slug === Astro.locals.starlightRoute.id);
+---
+
+{
+    index >= 0 && (
+        <p class="eyebrow">
+            Tutorial {index + 1} of {tutorials.length}
+        </p>
+    )
+}
+<Default />
+
+<style>
+    .eyebrow {
+        margin: 1rem 0 -0.5rem;
+        font-family: var(--sl-font-mono);
+        font-size: var(--sl-text-xs);
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--sl-color-text-accent);
+    }
+</style>

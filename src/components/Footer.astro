@@ -1,17 +1,26 @@
 ---
 /**
- * Starlight's own footer, with a trademark notice under it.
+ * Starlight's own footer, with who maintains the package and a trademark
+ * notice under it.
  *
  * This site documents an independent package whose name carries two other
  * companies' marks, on a domain that carries one of them. Saying so once, on
  * every page, is what keeps that an accurate description of an open-source
  * project rather than an implied endorsement — and it is cheaper to publish
  * now than to be asked for later.
+ *
+ * The maintainer line is text only until eazysoft.africa is live.
  */
 import Default from '@astrojs/starlight/components/Footer.astro';
+import EazysoftMark from './marks/EazysoftMark.astro';
 ---
 
 <Default><slot /></Default>
+
+<p class="credit">
+    <EazysoftMark size={18} />
+    <span>Laravel Daraja is free and open source, maintained by <b>eazysoft</b>.</span>
+</p>
 
 <p class="disclaimer">
     An independent open-source project, not affiliated with, endorsed by, or sponsored
@@ -21,10 +30,30 @@ import Default from '@astrojs/starlight/components/Footer.astro';
 </p>
 
 <style>
-    .disclaimer {
+    .credit {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
         margin-top: 1.5rem;
         padding-top: 1rem;
         border-top: 1px solid var(--sl-color-gray-6);
+        font-size: var(--sl-text-sm);
+        color: var(--sl-color-gray-2);
+    }
+
+    .credit :global(svg) {
+        flex: none;
+        color: var(--sl-color-white);
+    }
+
+    .credit b {
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        color: var(--sl-color-white);
+    }
+
+    .disclaimer {
+        margin-top: 1rem;
         font-size: var(--sl-text-xs);
         line-height: 1.6;
         color: var(--sl-color-gray-3);

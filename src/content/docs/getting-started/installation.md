@@ -9,6 +9,10 @@ description: Install the package and publish its configuration.
 - Laravel 12 or 13
 - The `openssl` and `json` extensions
 
+Laravel 10 and 11 are not supported. Both are past end of life and carry
+unpatched advisories, so Composer refuses to install them without disabling its
+security audit. Applications on those versions should stay on `^4.0`.
+
 ## Install
 
 ```bash

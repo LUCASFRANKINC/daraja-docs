@@ -3,93 +3,19 @@ title: Tutorials
 description: Start-to-finish M-Pesa integrations in Laravel — build one, then keep it running.
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import TutorialPath from '../../../components/TutorialPath.astro';
 
 The rest of this site answers questions about one API at a time. These pages
 build something end to end — the whole path from an empty Laravel application to
 a payment you can prove arrived.
 
 Each one is a working integration rather than a snippet, and each says what
-breaks in production as well as what works in sandbox.
+breaks in production as well as what works in sandbox. Read them in order, or
+jump to the one you need: each lists what it assumes at the top.
 
-## Start here
-
-<CardGrid>
-    <Card title="Accept M-Pesa payments" icon="rocket">
-        Send an STK push, receive the callback, and record the payment — with
-        the failure cases handled rather than ignored.
-
-        [Start here](../tutorials/stk-push/)
-    </Card>
-
-    <Card title="Testing callbacks on localhost" icon="laptop">
-        Why Safaricom cannot reach your laptop, what to do instead, and the
-        checklist for when nothing arrives.
-
-        [Read it](../tutorials/callbacks-localhost/)
-    </Card>
-</CardGrid>
-
-## Put it in front of a customer
-
-<CardGrid>
-    <Card title="M-Pesa checkout with Livewire" icon="document">
-        A component that pushes a prompt and updates itself when the payment
-        lands, with a timeout and the failure states filled in.
-
-        [Read it](../tutorials/livewire-checkout/)
-    </Card>
-
-    <Card title="Checkout for a SPA or mobile app" icon="mobile-android">
-        Two endpoints and a polling client for a Vue, React or Flutter front
-        end — with the throttling and authorisation a payment API needs.
-
-        [Read it](../tutorials/api-checkout/)
-    </Card>
-</CardGrid>
-
-## The other directions money moves
-
-<CardGrid>
-    <Card title="Paybill and till payments" icon="download">
-        Payments customers start themselves. Registering the URLs, recording
-        every one of them, and matching an account number a human typed.
-
-        [Read it](../tutorials/c2b-paybill/)
-    </Card>
-
-    <Card title="Payment by QR code" icon="phone">
-        A code the customer scans with the till and the amount already filled
-        in — and the question of which code the money came from.
-
-        [Read it](../tutorials/qr-payments/)
-    </Card>
-
-    <Card title="Sending money out" icon="external">
-        Refunds, payouts and salaries over B2C — sending exactly once, and
-        knowing afterwards what happened.
-
-        [Read it](../tutorials/b2c-payouts/)
-    </Card>
-</CardGrid>
-
-## Going further
-
-<CardGrid>
-    <Card title="Subscriptions and recurring payments" icon="clock">
-        M-Pesa has no card on file. What Ratiba gives you, what a scheduled
-        prompt gives you, and which one you will actually ship.
-
-        [Read it](../tutorials/subscriptions/)
-    </Card>
-
-    <Card title="One app, many short codes" icon="server">
-        Per-merchant credentials, scoped calls, and the question a platform has
-        to answer on every callback: whose payment is this?
-
-        [Read it](../tutorials/multi-tenant/)
-    </Card>
-</CardGrid>
+<div class="not-content tutorial-path">
+    <TutorialPath />
+</div>
 
 ## Then keep it running
 

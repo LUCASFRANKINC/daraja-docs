@@ -1,0 +1,64 @@
+---
+/**
+ * "Laravel Daraja by eazysoft", the same lockup as "Mizani by eazysoft":
+ * the product name, then the endorsement at about a third of its size.
+ * The endorsement is text only until eazysoft.africa is live.
+ */
+import DarajaMark from './marks/DarajaMark.astro';
+import EazysoftMark from './marks/EazysoftMark.astro';
+
+const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+---
+
+<a href={siteTitleHref} class="site-title">
+    <DarajaMark size={30} class="mark" />
+    <span class="name" translate="no">{siteTitle}</span>{' '}
+    <span class="by" translate="no">by <EazysoftMark /> <b>eazysoft</b></span>
+</a>
+
+<style>
+    .site-title {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        min-width: 0;
+        color: var(--sl-color-white);
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .mark {
+        flex: none;
+    }
+
+    .name {
+        font-size: var(--sl-text-h4);
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        line-height: 1;
+    }
+
+    .by {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        align-self: flex-end;
+        margin-bottom: 0.2rem;
+        font-size: 0.75rem;
+        line-height: 1;
+        color: var(--sl-color-gray-3);
+    }
+
+    .by b {
+        font-weight: 700;
+        letter-spacing: -0.055em;
+        color: var(--sl-color-gray-2);
+    }
+
+    /* The phone header also holds search and the menu: keep the name, drop the endorsement. */
+    @media (max-width: 26rem) {
+        .by {
+            display: none;
+        }
+    }
+</style>

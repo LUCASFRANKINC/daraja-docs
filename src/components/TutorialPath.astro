@@ -1,0 +1,232 @@
+---
+/**
+ * The tutorials as a path: the first one featured as "Start here", the rest
+ * numbered in reading order. Titles, descriptions and reading times come from
+ * the pages themselves, so the cards never go stale.
+ */
+import { getCollection } from 'astro:content';
+import { tutorials } from '../tutorials.mjs';
+
+const entries = await getCollection('docs', ({ id }) => id.startsWith('tutorials/'));
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const cards = tutorials.map(({ slug }, index) => {
+    const entry = entries.find(({ id }) => id === slug);
+    if (!entry) throw new Error(`Tutorial ${slug} is listed in src/tutorials.mjs but has no page.`);
+
+    // Prose and code alike, at a reading pace that allows for following along.
+    const words = (entry.body ?? '').split(/\s+/).filter(Boolean).length;
+
+    return {
+        number: String(index + 1).padStart(2, '0'),
+        href: `${base}/${slug}/`,
+        title: entry.data.title,
+        description: entry.data.description,
+        minutes: Math.max(5, Math.round(words / 200)),
+    };
+});
+
+const [first, ...rest] = cards;
+---
+
+<div class="wrap">
+    <div class="path">
+        <a class="featured" href={first.href}>
+            <span class="tag">Start here · {first.minutes} min</span>
+            <span class="title">{first.title}</span>
+            <span class="description">{first.description}</span>
+            <span class="go">
+                Build it
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
+        </a>
+
+        <ol class="grid">
+            {
+                rest.map(({ number, href, title, description, minutes }) => (
+                    <li>
+                        <a href={href}>
+                            <span class="number">{number}</span>
+                            <span class="title">{title}</span>
+                            <span class="description">{description}</span>
+                            <span class="minutes">{minutes} min read</span>
+                        </a>
+                    </li>
+                ))
+            }
+        </ol>
+    </div>
+</div>
+
+<style>
+    /* Sized by the space it is given, so it fits the home page and a docs column alike. */
+    .wrap {
+        container-type: inline-size;
+    }
+
+    .path {
+        display: grid;
+        gap: 1rem;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .featured {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.75rem;
+        border: 1px solid #1f3350;
+        border-radius: 16px;
+        color: #eaf0f7;
+        background:
+            radial-gradient(circle at 100% 0%, rgb(15 163 177 / 0.28), transparent 55%),
+            #0b1b33;
+        box-shadow: 0 24px 48px -24px rgb(11 27 51 / 0.55);
+        transition: transform 0.2s ease;
+    }
+
+    .featured:hover {
+        transform: translateY(-2px);
+    }
+
+    .tag {
+        align-self: flex-start;
+        justify-self: start;
+        padding: 0.25rem 0.65rem;
+        border-radius: 999px;
+        font-family: var(--sl-font-mono);
+        font-size: var(--sl-text-xs);
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #0b1b33;
+        background: #3cc6d2;
+    }
+
+    .featured .title {
+        font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+        color: #ffffff;
+    }
+
+    .featured .description {
+        max-width: 34rem;
+        color: #c1cbd9;
+    }
+
+    .go {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: auto;
+        padding-top: 0.5rem;
+        font-weight: 600;
+        color: #8fe3ea;
+    }
+
+    .grid {
+        display: grid;
+        gap: 1rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .grid a {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        height: 100%;
+        padding: 1.25rem;
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 12px;
+        background: var(--sl-color-black);
+        transition:
+            border-color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .grid a:hover {
+        border-color: var(--sl-color-accent);
+        transform: translateY(-2px);
+    }
+
+    .number {
+        font-family: var(--sl-font-mono);
+        font-size: var(--sl-text-sm);
+        font-weight: 600;
+        color: var(--sl-color-text-accent);
+    }
+
+    .grid .title {
+        font-size: var(--sl-text-lg);
+        font-weight: 600;
+        line-height: 1.3;
+        letter-spacing: -0.015em;
+        color: var(--sl-color-white);
+    }
+
+    .grid .description {
+        font-size: var(--sl-text-sm);
+        color: var(--sl-color-gray-2);
+    }
+
+    .minutes {
+        margin-top: auto;
+        padding-top: 0.5rem;
+        font-size: var(--sl-text-xs);
+        color: var(--sl-color-gray-3);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .featured,
+        .grid a {
+            transition: none;
+        }
+
+        .featured:hover,
+        .grid a:hover {
+            transform: none;
+        }
+    }
+
+    @container (min-width: 36rem) {
+        .grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    /* Wide: the featured card runs across the top, its copy beside its call to action. */
+    @container (min-width: 48rem) {
+        .featured {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            column-gap: 2rem;
+            padding: 2.25rem;
+        }
+
+        .featured > :not(.go) {
+            grid-column: 1;
+        }
+
+        .go {
+            grid-column: 2;
+            grid-row: 1 / span 3;
+            align-self: center;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid #3cc6d2;
+            border-radius: 10px;
+        }
+    }
+
+    @container (min-width: 60rem) {
+        .grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    }
+</style>

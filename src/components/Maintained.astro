@@ -1,0 +1,95 @@
+---
+/**
+ * Who is behind the package, and the way to have something built. Text and
+ * email only until eazysoft.africa is live; the link to the site goes in
+ * with the launch-day merge.
+ */
+import EazysoftMark from './marks/EazysoftMark.astro';
+
+const CONTACT = 'hello@eazysoft.africa';
+const href = `mailto:${CONTACT}?subject=${encodeURIComponent('Enquiry from laraveldaraja.com')}`;
+---
+
+<section class="maintained" aria-labelledby="maintained-heading">
+    <div class="brand" aria-hidden="true">
+        <EazysoftMark size={44} />
+        <span>eazysoft</span>
+    </div>
+    <div class="copy">
+        <h2 id="maintained-heading">Built and maintained by Eazysoft</h2>
+        <p>
+            Laravel Daraja is free and open source, and it stays that way. Eazysoft is the
+            software company behind it. If you would rather have your M-Pesa integration, or
+            anything else, built for you, talk to us.
+        </p>
+    </div>
+    <a class="cta" href={href}>Email {CONTACT}</a>
+</section>
+
+<style>
+    .maintained {
+        display: grid;
+        gap: 1.5rem;
+        align-items: center;
+        padding: 2rem;
+        border: 1px solid #1f3350;
+        border-radius: 16px;
+        color: #c1cbd9;
+        background:
+            radial-gradient(circle at 0% 100%, rgb(15 163 177 / 0.22), transparent 50%),
+            #0b1b33;
+    }
+
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: #ffffff;
+    }
+
+    .brand span {
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: -0.055em;
+        line-height: 1;
+    }
+
+    h2 {
+        margin: 0 0 0.5rem;
+        font-size: var(--sl-text-2xl);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: #ffffff;
+    }
+
+    p {
+        margin: 0;
+        max-width: 40rem;
+    }
+
+    .cta {
+        display: inline-flex;
+        align-items: center;
+        justify-self: start;
+        min-height: 2.75rem;
+        padding: 0 1.25rem;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        color: #0b1b33;
+        background: #3cc6d2;
+    }
+
+    .cta:hover {
+        background: #8fe3ea;
+    }
+
+    @media (min-width: 64rem) {
+        .maintained {
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            gap: 2.5rem;
+            padding: 2.5rem;
+        }
+    }
+</style>
