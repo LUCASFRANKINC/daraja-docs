@@ -10,14 +10,18 @@
  * now than to be asked for later.
  */
 import Default from '@astrojs/starlight/components/Footer.astro';
+import DarajaMark from './marks/DarajaMark.astro';
 import EazysoftMark from './marks/EazysoftMark.astro';
 ---
 
 <Default><slot /></Default>
 
 <p class="credit">
-    <EazysoftMark size={18} />
-    <span>Laravel Daraja is free and open source, maintained by <a href="https://eazysoft.africa">eazysoft</a>.</span>
+    <DarajaMark size={18} class="credit__mark" />
+    <span>
+        Laravel Daraja is free and open source, maintained by{' '}
+        <a class="credit__by" href="https://eazysoft.africa"><EazysoftMark size={13} />eazysoft</a>.
+    </span>
 </p>
 
 <p class="disclaimer">
@@ -39,14 +43,19 @@ import EazysoftMark from './marks/EazysoftMark.astro';
         color: var(--sl-color-gray-2);
     }
 
-    .credit :global(svg) {
+    .credit :global(.credit__mark) {
         flex: none;
         color: var(--sl-color-white);
     }
 
-    .credit a {
+    .credit__by {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
         font-weight: 700;
         letter-spacing: -0.04em;
+        vertical-align: bottom;
+        white-space: nowrap;
         color: var(--sl-color-white);
     }
 
