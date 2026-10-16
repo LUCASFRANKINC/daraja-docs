@@ -26,7 +26,8 @@ Unknown Daraja mode [staging]. Supported modes are "sandbox" and "live".
 The Safaricom public certificate could not be read at [/path/cert.cer]. …
 ```
 
-The message always names the offending config key or path.
+The message always names the offending config key or path, and a missing value
+ends with a link to the [configuration reference](/reference/configuration/).
 
 ## AuthenticationException
 
@@ -39,7 +40,8 @@ catch (AuthenticationException $exception) {
 ```
 
 Also raised when Daraja answers without an `access_token`, which usually means
-sandbox credentials pointed at production or vice versa.
+sandbox credentials pointed at production or vice versa. Both messages end
+with a link to [Configuration](/getting-started/configuration/).
 
 ## ApiRequestException
 
@@ -54,6 +56,10 @@ catch (ApiRequestException $exception) {
     $exception->getMessage();
 }
 ```
+
+The message is Safaricom's own description, unchanged, because applications
+store it and sometimes show it. What explains it goes to the log instead: see
+[Links in the log](#links-in-the-log).
 
 It parses all three failure shapes Daraja uses: the flat
 `errorCode`/`errorMessage` object, the SOAP-style `Envelope.Body.Fault`, and
@@ -82,6 +88,31 @@ The base class is thrown directly for input the package can reject itself:
 // Bill Manager batch limits
 'Bill Manager accepts a maximum of 1000 invoices per bulk request, 1500 given.'
 ```
+
+## Links in the log
+
+Since 5.4.0, every exception has `docsUrl()`, the page on this site that
+explains it, and a `context()` method. Laravel calls `context()` when it
+reports an exception and adds the result to the log entry, so the explanation
+is one click from the log line:
+
+```php
+$exception->docsUrl();
+// 'https://laraveldaraja.com/reference/error-codes/'
+
+$exception->context();
+// [
+//     'docs' => 'https://laraveldaraja.com/reference/error-codes/',
+//     'error_code' => '400.002.02',
+//     'request_id' => '11728-2929992-1',
+//     'status' => 400,
+// ]
+```
+
+`ApiRequestException` links to [Error codes](/reference/error-codes/) and adds
+whichever of the error code, request ID and status Safaricom sent.
+`ConfigurationException` and `AuthenticationException` link to the
+configuration pages, and the base `DarajaException` to this page.
 
 ## What is not an exception
 
