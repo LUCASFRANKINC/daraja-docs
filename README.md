@@ -86,11 +86,11 @@ description, using the fonts in `src/fonts/` and `src/assets/logo-og.png`. They
 are cached in `node_modules/.astro-og-canvas` between local builds. To restyle
 them, edit `getImageOptions` and delete that cache.
 
-Regenerate `src/assets/logo-og.png` from the SVG with:
-
-```bash
-node -e "require('sharp')('src/assets/logo.svg',{density:600}).resize(160,160).png().toFile('src/assets/logo-og.png')"
-```
+`src/assets/logo-og.png` is the "Laravel Daraja by eazysoft" lockup. Its source
+is `scripts/og-lockup.html`: open it in Chrome (it loads Geist from
+`node_modules`), and screenshot the `.lockup` element at a device scale factor
+of 2 with a transparent background. With Puppeteer, that is
+`(await page.$('.lockup')).screenshot({ path, omitBackground: true })`.
 
 ## Repository social previews
 

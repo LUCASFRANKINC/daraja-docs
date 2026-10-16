@@ -71,3 +71,70 @@
 .sl-markdown-content table th {
     white-space: normal;
 }
+
+/* Inline code: a teal-tinted chip, so it reads as code next to prose. */
+.sl-markdown-content :not(pre) > code {
+    padding: 0.1em 0.35em;
+    border: 1px solid var(--sl-color-accent-low);
+    border-radius: 6px;
+    background: rgb(15 163 177 / 0.1);
+    color: var(--sl-color-white);
+}
+
+/* Starlight's cards rotate through purple, orange, green and red icons. Keep them in the palette. */
+.card {
+    --sl-card-border: var(--sl-color-accent);
+    --sl-card-bg: var(--sl-color-accent-low);
+}
+
+/*
+ * In dark mode the page is itself navy, so the code panels step up one shade
+ * and take a lighter edge. Every token colour still clears 5.5:1 on #10243F.
+ */
+:root[data-theme='dark'] .expressive-code {
+    --ec-codeBg: #10243f;
+    --ec-frm-edBg: #10243f;
+    --ec-frm-edActTabBg: #10243f;
+    --ec-frm-trmBg: #10243f;
+}
+
+:root[data-theme='dark'] .expressive-code .frame {
+    border-color: #34507a;
+}
+
+/* The home page: sections below the hero, and one full-width tinted band. */
+.home {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4rem, 3rem + 4vw, 6.5rem);
+    padding-bottom: 2rem;
+}
+
+.home .band {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    background: var(--sl-color-gray-7, var(--sl-color-gray-6));
+    box-shadow: 0 0 0 100vmax var(--sl-color-gray-7, var(--sl-color-gray-6));
+    clip-path: inset(0 -100vmax);
+}
+
+.home p a {
+    color: var(--sl-color-text-accent);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+    text-underline-offset: 0.2em;
+}
+
+.home p a:hover {
+    text-decoration-color: currentColor;
+}
+
+.home p code {
+    padding: 0.1em 0.35em;
+    border-radius: 6px;
+    font-size: 0.9em;
+    background: rgb(15 163 177 / 0.1);
+}
+
+.tutorial-path {
+    margin-block: 2rem;
+}

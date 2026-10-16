@@ -24,7 +24,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     getImageOptions: (_path, page: { title: string; description: string }) => ({
         title: page.title,
         description: page.description,
-        logo: { path: './src/assets/logo-og.png', size: [76] },
+        logo: { path: './src/assets/logo-og.png', size: [460] },
         // Same palette as the site: Eazysoft Deep Navy ground, Wink Teal edge.
         bgGradient: [
             [11, 27, 51],

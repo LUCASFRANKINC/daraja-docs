@@ -8,6 +8,8 @@
  * SECURITY.md. Swap `CONTACT` for a dedicated address if you would rather
  * keep integration enquiries out of your personal inbox.
  */
+import EazysoftMark from './marks/EazysoftMark.astro';
+
 interface Props {
     /** Overrides the body copy for the page it sits on. */
     note?: string;
@@ -26,25 +28,41 @@ const href = `mailto:${CONTACT}?subject=${encodeURIComponent(subject)}`;
 ---
 
 <aside class="hire-me" aria-label="Consulting">
+    <p class="hire-me__brand" aria-hidden="true"><EazysoftMark size={16} /> eazysoft</p>
     <p class="hire-me__lead">Need this built rather than read?</p>
     <p class="hire-me__note">{note}</p>
     <p class="hire-me__note">
-        I maintain this package. If you would rather hand the integration over —
+        Eazysoft maintains this package. If you would rather hand the integration over —
         or have someone review one you already have — <a href={href}>get in touch</a>.
     </p>
 </aside>
 
 <style>
     .hire-me {
+        position: relative;
+        overflow: hidden;
         border: 1px solid var(--sl-color-gray-5);
-        border-inline-start: 3px solid var(--sl-color-accent);
-        border-radius: 0.25rem;
-        padding: 1rem 1.25rem;
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
         margin: 2rem 0;
-        background: var(--sl-color-gray-6);
+        background:
+            radial-gradient(circle at 100% 0%, rgb(15 163 177 / 0.12), transparent 55%),
+            var(--sl-color-gray-6);
+    }
+
+    .hire-me__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin: 0 0 0.5rem;
+        font-size: var(--sl-text-xs);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        color: var(--sl-color-white);
     }
 
     .hire-me__lead {
+        font-size: var(--sl-text-lg);
         font-weight: 600;
         color: var(--sl-color-white);
         margin: 0 0 0.5rem;

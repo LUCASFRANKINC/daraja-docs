@@ -9,6 +9,8 @@
  * problem the reader has just met, says Mizani is paid, and says this
  * package stays free.
  */
+import EazysoftMark from './marks/EazysoftMark.astro';
+
 interface Props {
     /** Which problem the page has just described. */
     topic: 'callbacks' | 'reconciliation' | 'statements' | 'tenants';
@@ -43,6 +45,7 @@ const copy = {
 ---
 
 <aside class="mizani" aria-label="Mizani">
+    <p class="mizani__brand" aria-hidden="true">Mizani <span>by <EazysoftMark size={11} /> <b>eazysoft</b></span></p>
     <p class="mizani__lead">{copy.lead}</p>
     <p class="mizani__note">{copy.note}</p>
     <p class="mizani__note">
@@ -54,13 +57,49 @@ const copy = {
 <style>
     .mizani {
         border: 1px solid var(--sl-color-gray-5);
-        border-radius: 0.5rem;
-        padding: 1rem 1.25rem;
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
         margin: 2rem 0;
-        background: var(--sl-color-gray-6);
+        background:
+            radial-gradient(circle at 100% 0%, rgb(15 163 177 / 0.12), transparent 55%),
+            var(--sl-color-gray-6);
+    }
+
+    .mizani__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin: 0 0 0.5rem;
+        font-size: var(--sl-text-sm);
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        color: var(--sl-color-white);
+    }
+
+    .mizani__brand span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+        line-height: 1;
+        font-size: 0.6875rem;
+        font-weight: 400;
+        letter-spacing: 0;
+        color: var(--sl-color-gray-3);
+    }
+
+    /* Markdown content spaces adjacent elements apart; not inside the lockup. */
+    .mizani__brand * {
+        margin: 0;
+    }
+
+    .mizani__brand b {
+        font-weight: 700;
+        letter-spacing: -0.055em;
+        color: var(--sl-color-gray-2);
     }
 
     .mizani__lead {
+        font-size: var(--sl-text-lg);
         font-weight: 600;
         color: var(--sl-color-white);
         margin: 0 0 0.5rem;

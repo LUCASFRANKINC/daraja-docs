@@ -1,0 +1,133 @@
+---
+/** The package in three moves: send the prompt, handle the result, test it. Kept narrow enough to read without scrolling. */
+import { Code } from '@astrojs/starlight/components';
+
+const steps = [
+    {
+        title: 'Prompt a customer to pay',
+        text: 'One call sends an STK push and returns a typed response.',
+        code: `Daraja::stk()->push(
+    phone: '0712345678',
+    amount: 1500,
+    accountReference: 'INV-001',
+);`,
+    },
+    {
+        title: 'Handle the result',
+        text: 'Callbacks arrive as typed Laravel events, not raw JSON.',
+        code: `public function handle(
+    StkCallbackReceived $event,
+) {
+    $event->callback->successful();
+    $event->callback->receipt();
+}`,
+    },
+    {
+        title: 'Test without a network',
+        text: 'Built on Laravel’s HTTP client, so Http::fake() drives it all.',
+        code: `Http::fake([
+    '*stkpush*' => Http::response(
+        ['ResponseCode' => '0'],
+    ),
+]);`,
+    },
+];
+---
+
+<ol class="steps">
+    {
+        steps.map(({ title, text, code }, index) => (
+            <li>
+                <div class="text">
+                    <span class="number" aria-hidden="true">{index + 1}</span>
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                </div>
+                <Code code={code} lang="php" />
+            </li>
+        ))
+    }
+</ol>
+
+<style>
+    .steps {
+        display: grid;
+        gap: 1rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        min-width: 0;
+        overflow: hidden;
+        padding: 1.25rem 1.25rem 0;
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 16px;
+        background: var(--sl-color-black);
+    }
+
+    .text {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.25rem 0.75rem;
+        align-items: center;
+    }
+
+    .number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 8px;
+        font-family: var(--sl-font-mono);
+        font-size: var(--sl-text-sm);
+        font-weight: 600;
+        color: #ffffff;
+        background: #0b7c87;
+    }
+
+    h3 {
+        margin: 0;
+        font-size: var(--sl-text-lg);
+        font-weight: 600;
+        letter-spacing: -0.015em;
+        color: var(--sl-color-white);
+    }
+
+    p {
+        grid-column: 2;
+        margin: 0;
+        font-size: var(--sl-text-sm);
+        color: var(--sl-color-gray-2);
+    }
+
+    /* The code runs to the card's edges, so the narrow columns lose no width to a second border. */
+    li :global(.expressive-code) {
+        margin: auto -1.25rem 0;
+    }
+
+    li :global(.expressive-code .frame) {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    li :global(.expressive-code pre) {
+        border-width: 1px 0 0;
+        border-radius: 0;
+    }
+
+    li :global(.expressive-code pre) {
+        font-size: 0.8125rem;
+    }
+
+    @media (min-width: 64rem) {
+        .steps {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+</style>

@@ -2,6 +2,8 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightLlmsTxt from 'starlight-llms-txt';
+import { codeStyles, eazysoftCode } from './src/code-theme.mjs';
+import { tutorials } from './src/tutorials.mjs';
 
 /*
  * ---------------------------------------------------------------------------
@@ -88,11 +90,21 @@ export default defineConfig({
             title: 'Laravel Daraja',
             description:
                 'A Laravel package for the Safaricom M-Pesa Daraja APIs — STK Push, C2B, B2C, QR, Ratiba, Bill Manager and more.',
-            logo: { src: './src/assets/logo.svg', replacesTitle: false },
             head,
-            // Starlight's footer, plus the trademark notice under it.
             components: {
+                // Starlight's footer, plus the maintainer and trademark notices.
                 Footer: './src/components/Footer.astro',
+                // The mark without its tile, and the "by eazysoft" endorsement.
+                SiteTitle: './src/components/SiteTitle.astro',
+                // The home page hero: a code window instead of the logo.
+                Hero: './src/components/Hero.astro',
+                // A "Tutorial 3 of 9" eyebrow above each tutorial's title.
+                PageTitle: './src/components/PageTitle.astro',
+            },
+            // One navy theme for both site themes: see src/code-theme.mjs.
+            expressiveCode: {
+                themes: [eazysoftCode],
+                styleOverrides: codeStyles,
             },
             // Search titles, OpenGraph images and JSON-LD.
             routeMiddleware: './src/routeData.ts',
@@ -151,15 +163,7 @@ export default defineConfig({
                     label: 'Tutorials',
                     items: [
                         { label: 'Overview', slug: 'tutorials' },
-                        { label: 'Accept M-Pesa payments', slug: 'tutorials/stk-push' },
-                        { label: 'Callbacks on localhost', slug: 'tutorials/callbacks-localhost' },
-                        { label: 'Checkout with Livewire', slug: 'tutorials/livewire-checkout' },
-                        { label: 'Checkout for a SPA or app', slug: 'tutorials/api-checkout' },
-                        { label: 'Paybill and till payments', slug: 'tutorials/c2b-paybill' },
-                        { label: 'Payment by QR code', slug: 'tutorials/qr-payments' },
-                        { label: 'Sending money out', slug: 'tutorials/b2c-payouts' },
-                        { label: 'Subscriptions', slug: 'tutorials/subscriptions' },
-                        { label: 'One app, many short codes', slug: 'tutorials/multi-tenant' },
+                        ...tutorials.map(({ slug, label }) => ({ label, slug })),
                     ],
                 },
                 {
