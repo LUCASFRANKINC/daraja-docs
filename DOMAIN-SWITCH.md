@@ -1,8 +1,12 @@
 # Moving to a custom domain
 
-> **Steps 1–4 are done.** The site moved from `starnerz.github.io/daraja-docs/`
-> to `laraveldaraja.com` on 1 September 2026. What follows is kept as the record
-> of how, and because steps 5–8 are still open.
+> **Done, bar Bing.** The site moved from `starnerz.github.io/daraja-docs/`
+> to `laraveldaraja.com` on 1 September 2026. Checked 16 October 2026: HTTPS is
+> enforced and `http://` and the old github.io URLs 301 to the new domain
+> (step 5); laravel-daraja's `composer.json` and both repositories' website
+> fields use the new domain (step 6); `GOOGLE_SITE_VERIFICATION` and
+> `PLAUSIBLE_DOMAIN` are set (steps 7 and 8). Still open: Bing Webmaster Tools,
+> by importing from Search Console. What follows is kept as the record of how.
 
 The site was a GitHub Pages *project* site, served from
 `starnerz.github.io/daraja-docs/`. That capped what the site could do:
