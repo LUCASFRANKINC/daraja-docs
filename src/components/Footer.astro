@@ -12,14 +12,18 @@
  * The maintainer line is text only until eazysoft.africa is live.
  */
 import Default from '@astrojs/starlight/components/Footer.astro';
+import DarajaMark from './marks/DarajaMark.astro';
 import EazysoftMark from './marks/EazysoftMark.astro';
 ---
 
 <Default><slot /></Default>
 
 <p class="credit">
-    <EazysoftMark size={18} />
-    <span>Laravel Daraja is free and open source, maintained by <b>eazysoft</b>.</span>
+    <DarajaMark size={18} class="credit__mark" />
+    <span>
+        Laravel Daraja is free and open source, maintained by{' '}
+        <b class="credit__by"><EazysoftMark size={13} />eazysoft</b>.
+    </span>
 </p>
 
 <p class="disclaimer">
@@ -41,14 +45,19 @@ import EazysoftMark from './marks/EazysoftMark.astro';
         color: var(--sl-color-gray-2);
     }
 
-    .credit :global(svg) {
+    .credit :global(.credit__mark) {
         flex: none;
         color: var(--sl-color-white);
     }
 
-    .credit b {
+    .credit__by {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
         font-weight: 700;
         letter-spacing: -0.04em;
+        vertical-align: bottom;
+        white-space: nowrap;
         color: var(--sl-color-white);
     }
 
