@@ -50,6 +50,19 @@ DARAJA_STK_PASS_KEY=
 DARAJA_STK_CALLBACK_URL=https://your-domain/daraja/stk
 ```
 
+## C2B Hakikisha
+
+C2B Hakikisha is receiver-side: Safaricom calls your app to obtain a token and
+resolve an account name. Enable package routes and configure the partner
+credentials:
+
+```dotenv
+DARAJA_ROUTES_ENABLED=true
+DARAJA_C2B_HAKIKISHA_USERNAME=partner-user
+DARAJA_C2B_HAKIKISHA_PASSWORD=change-this-secret
+DARAJA_C2B_HAKIKISHA_TOKEN_TTL=3599
+```
+
 ## Callback URLs
 
 Each accepts either an absolute URL or the **name of a route** in your
